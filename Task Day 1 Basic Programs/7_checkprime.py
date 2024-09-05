@@ -1,12 +1,15 @@
 try:
     num = int(input("Enter the number : "))
-    flag = 0
-    for i in range(2,int(num/2)):
-        if num % i ==0:
-            flag = 1
-    if flag ==0:
-        print("The number is prime")
+    if num < 1:
+        print("Enter Positive Integer")
     else:
-        print("The number is not prime")
+        flag = 0
+        for i in range(2,int(num/2)):
+            if num % i ==0:
+                flag = 1
+        if flag ==0:
+            print("The number is prime")
+        else:
+            print("The number is not prime")
 except ValueError:
-    print("Enter Integer Number")
+    print("Enter Integer Value")
