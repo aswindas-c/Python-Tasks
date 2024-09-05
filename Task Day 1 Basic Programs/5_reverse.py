@@ -1,8 +1,8 @@
-str = input("Enter the string :\n")
+word = input("Enter the string :\n")
 reverse = ""
 length = 0
-for i in str:
+for i in word:
     length += 1
 for i in range(length-1,-1,-1):
-    reverse = reverse + str[i]
+    reverse = reverse + word[i]
 print("Reversed String : "+reverse)
