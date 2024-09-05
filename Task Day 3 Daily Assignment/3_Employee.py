@@ -29,10 +29,7 @@ part_time_employee = PartTimeEmployee("Amal",20,100)
 
 print("Full Time Employee")
 full_time_employee.describe()
-salary = full_time_employee.calculate_salary()
-print(f"Salary = {salary}")
+print(f"Salary = {full_time_employee.calculate_salary()}")
 print("Part Time Employee")
 (part_time_employee.describe())
-salary = part_time_employee.calculate_salary()
-print(f"Salary = {salary}")
-
+print(f"Salary = {part_time_employee.calculate_salary()}")

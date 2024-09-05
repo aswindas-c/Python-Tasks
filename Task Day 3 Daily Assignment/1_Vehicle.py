@@ -23,10 +23,8 @@ class Truck(Vehicle):
     def get_fuel_efficiency(self):
         return 15
 try:
-    string = input("Enter the type of vehicle : car/truck")
-    vehicle = Vehicle.from_name(string)
-    efficiency = vehicle.get_fuel_efficiency()
-    print(f"Fuel efficiency is {efficiency} miles per gallon")
+    vehicle = Vehicle.from_name(input("Enter the type of vehicle : car/truck"))
+    print(f"Fuel efficiency is {vehicle.get_fuel_efficiency()} miles per gallon")
     vehicle.describe()
 except ValueError as e:
     print(f"Error : {e}")
