@@ -17,42 +17,46 @@ def split(date_variable):
 
     return date_list
 
+try:
+    date1 = input("Enter the date 1 in DD/MM/YYYY format:\n")
+    date2 = input("Enter the date 2 in DD/MM/YYYY format:\n")
 
-date1 = input("Enter the date 1 in DD/MM/YYYY format:\n")
-date2 = input("Enter the date 2 in DD/MM/YYYY format:\n")
+    day31 = [1,3,5,7,8,10,12]
+    day30 = [4,6,9,11]
+    day28 = [2]
 
-day31 = [1,3,5,7,8,10,12]
-day30 = [4,6,9,11]
-day28 = [2]
+    date_list_1 = split(date1)
+    date_list_2 = split(date2)
+    day_diff = abs(date_list_2[0] -date_list_1[0])
+    month_diff = abs(date_list_2[1]  -date_list_1[1])
+    year_diff = abs(date_list_2[2]-date_list_1[2])
 
-date_list_1 = split(date1)
-date_list_2 = split(date2)
-day_diff = abs(date_list_2[0] -date_list_1[0])
-month_diff = abs(date_list_2[1]  -date_list_1[1])
-year_diff = abs(date_list_2[2]-date_list_1[2])
+    if ((date_list_1[2] > date_list_2[2] and  date_list_1[1] < date_list_2[1]) or
+            (date_list_1[2] < date_list_2[2] and  date_list_1[1] > date_list_2[1])):
+        year_diff -= 1
+        month_diff = 12 - month_diff
 
-if ((date_list_1[2] > date_list_2[2] and  date_list_1[1] < date_list_2[1]) or
-        (date_list_1[2] < date_list_2[2] and  date_list_1[1] > date_list_2[1])):
-    year_diff -= 1
-    month_diff = 12 - month_diff
-
-if (date_list_1[1] > date_list_2[1] and  date_list_1[0] > date_list_2[0] and date_list_1[2] < date_list_2[2] or
-        date_list_1[0] > date_list_2[0] and date_list_1[1] < date_list_2[1] and date_list_1[2] < date_list_2[2]or
-        date_list_1[0] < date_list_2[0] and date_list_1[1] > date_list_2[1] and date_list_1[2] > date_list_2[2] or
-        date_list_1[1] < date_list_2[1] and  date_list_1[0] < date_list_2[0] and date_list_1[2] > date_list_2[2]):
-    month_diff -= 1
-    if date_list_2[1] < date_list_1[1]:
-        if date_list_2[1] in day31:
-            day_diff = 31 - day_diff
-        elif date_list_2[1] in day30:
-            day_diff = 30 - day_diff
+    if (date_list_1[1] > date_list_2[1] and  date_list_1[0] > date_list_2[0] and date_list_1[2] < date_list_2[2] or
+            date_list_1[0] > date_list_2[0] and date_list_1[1] < date_list_2[1] and date_list_1[2] < date_list_2[2]or
+            date_list_1[0] < date_list_2[0] and date_list_1[1] > date_list_2[1] and date_list_1[2] > date_list_2[2] or
+            date_list_1[1] < date_list_2[1] and  date_list_1[0] < date_list_2[0] and date_list_1[2] > date_list_2[2]):
+        month_diff -= 1
+        if date_list_2[1] < date_list_1[1]:
+            if date_list_2[1] in day31:
+                day_diff = 31 - day_diff
+            elif date_list_2[1] in day30:
+                day_diff = 30 - day_diff
+            else:
+                day_diff = 28 - day_diff
         else:
-            day_diff = 28 - day_diff
-    else:
-        if date_list_1[1] in day31:
-            day_diff = 31 - day_diff
-        elif date_list_1[1] in day30:
-            day_diff = 30 - day_diff
-        else:
-            day_diff = 28 - day_diff
-print(f"Difference is {day_diff} days {month_diff} months and {year_diff} years")
+            if date_list_1[1] in day31:
+                day_diff = 31 - day_diff
+            elif date_list_1[1] in day30:
+                day_diff = 30 - day_diff
+            else:
+                day_diff = 28 - day_diff
+    print(f"Difference is {day_diff} days {month_diff} months and {year_diff} years")
+except IndexError:
+    print("Enter date in specified format")
+except ValueError:
+    print("Enter numerical date")
