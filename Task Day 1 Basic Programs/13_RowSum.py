@@ -1,20 +1,20 @@
-# list1 =[]
-# n =  int(input("Enter the number of rows : "))
-# m =  int(input("Enter the number of columns : "))
-# print("Enter the elements of list 1 : \n")
-# for i in range(0,n):
-#     list2 = []
-#     for j in range(0,m):
-#         num = int(input())
-#         list2.append(num)
-#     list1.append(list2)
-# print(f"2D List : {list1}")
-#
-# for i in list1:
-#     sum =0
-#     for j in i:
-#         sum = sum + j
-#     print(f"Sum of Row {i} : {sum}")
+list1 =[]
+n =  int(input("Enter the number of rows : "))
+m =  int(input("Enter the number of columns : "))
+print("Enter the elements of list 1 : \n")
+for i in range(0,n):
+    list2 = []
+    for j in range(0,m):
+        num = int(input())
+        list2.append(num)
+    list1.append(list2)
+print(f"2D List : {list1}")
+
+for i in list1:
+    sum =0
+    for j in i:
+        sum = sum + j
+    print(f"Sum of Row {i} : {sum}")
 
 print("\n3D list\n")
 
