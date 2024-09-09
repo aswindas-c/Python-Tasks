@@ -2,7 +2,6 @@ import school_module as sm
 class Main:
     student_id_counter = 1
     sc = sm.AdvancedSchool()
-    student_instances = {}
     try:
         while True:
             print("1.Add student")
@@ -19,17 +18,13 @@ class Main:
                     name = input("Enter Student Name : ")
                     student_id = student_id_counter
                     student = sm.Student(student_id,name)
-                    student_instances[student_id] = student
                     sc.add_student(student)
                     student_id_counter += 1
                 elif choice == 2:
                     try:
                         student_id = int(input("Enter Student id : "))
-                        if student_id in sc.students.keys():
-                            student = student_instances[student_id]
-                            student.add_grade()
-                        else:
-                            print(f"Student with {student_id} not exits")
+                        student = sc.get_student_by_id(student_id)
+                        student.add_grade()
                     except ValueError:
                         print("Enter Integer Student Id")
                 elif choice == 3:
@@ -47,7 +42,7 @@ class Main:
                     try:
                         student_id = int(input("Enter student id : "))
                         if student_id in sc.students.keys():
-                            student = student_instances[student_id]
+                            student = sc.get_student_by_id(student_id)
                             student.display_details()
                         else:
                             print(f"Student with id {student_id} not found")

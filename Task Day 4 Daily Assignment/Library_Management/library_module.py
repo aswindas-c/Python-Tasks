@@ -54,7 +54,6 @@ class LibraryUser(User):
     def borrow_book(self,book_id,user_id,borrow):
         self.borrowed[user_id].append(borrow)
         print("Book Borrowed Successfully")
-
     def return_book(self,book_id,user_id,title):
         self.borrowed[user_id].remove(title)
         print("Book Returned Successfully")

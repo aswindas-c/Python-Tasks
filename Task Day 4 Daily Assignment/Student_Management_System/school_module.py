@@ -53,6 +53,11 @@ class School:
     def display_students(self):
         for student in self.students.values():
             yield student
+    def get_student_by_id(self,student_id):
+        if self.students.get(student_id) is None:
+            raise KeyError("Student not found")
+        else:
+            return self.students.get(student_id)
 
 class AdvancedSchool(School):
     def above_average(self):
