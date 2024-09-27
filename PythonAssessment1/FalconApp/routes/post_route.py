@@ -1,5 +1,6 @@
 import falcon
 import json
+
 from FalconApp.models.mongodb_model import MongoDBModel
 class PostRoute:
     def __init__(self):
@@ -41,7 +42,7 @@ class PostRoute:
             except (json.JSONDecodeError, FileNotFoundError):
                 users = []
 
-            users.append({'name': data.get('name'), 'email': email, 'age': data.get('age')})
+            users.append({'name': name, 'email': email, 'age': age})
             with open('users.json', 'w') as f:
                 json.dump(users, f, indent=4)
         except Exception as e:
