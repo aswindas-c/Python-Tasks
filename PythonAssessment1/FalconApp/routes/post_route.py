@@ -2,6 +2,9 @@ import falcon
 import json
 
 from FalconApp.models.mongodb_model import MongoDBModel
+from FalconApp.models.user_model import User
+
+
 class PostRoute:
     def __init__(self):
         self.mongo_db = MongoDBModel()
@@ -31,10 +34,8 @@ class PostRoute:
         except ValueError:
             raise falcon.HTTPBadRequest("Age should be digit")
         try:
-            #Insert data into database
-            document = {'name': name, 'email': email, 'age': age}
-            self.mongo_db.collection.insert_one(document)
-
+            user = User(name,email,age)
+            self.mongo_db.collection.insert_one(user.add_to_db())
             # Write user details to a JSON file
             try:
                 with open('users.json', 'r') as f:

@@ -9,6 +9,8 @@ class GetRoute:
     def on_get(self,req,resp,email):
         if email is None:
             raise falcon.HTTPBadRequest("Enter email")
+        if "@" not in email:
+            raise falcon.HTTPBadRequest("Invalid email")
         user = self.mongo_db.collection.find_one({'email': email},{'_id': 0})
         if user:
             resp.media = user
