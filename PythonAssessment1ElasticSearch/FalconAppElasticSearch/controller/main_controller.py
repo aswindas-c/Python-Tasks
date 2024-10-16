@@ -15,9 +15,9 @@ class MainController:
 
         data = req.media
         name = data.get('name')
-        email = data.get('email')
+        email = data.get('email').lower()
         age = data.get('age')
-        user = User().create_user(name,email,age)
+        User().create_user(name,email,age)
         # Write user details to a JSON file
         try:
             with open('users.json', 'r') as f:
@@ -33,11 +33,11 @@ class MainController:
     @staticmethod
     def on_get(req,resp,email):
         if email is None:
-            raise falcon.HTTPBadRequest("Enter email")
+            raise falcon.HTTPBadRequest(title="Bad Request", description="Enter email")
         if "@" not in email:
-            raise falcon.HTTPBadRequest("Invalid email")
+            raise falcon.HTTPBadRequest(title="Bad Request", description="Invalid email")
 
-        user = User().find_by_email(email)
+        user = User().find_by_email(email.lower())
 
         if user:
             resp.media = user
