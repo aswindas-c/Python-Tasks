@@ -27,6 +27,3 @@ class ElasticsearchModel:
 
     def document_exists(self, doc_id):
         return self.es.exists(index=self.index, id=doc_id)
-
-    def get_type(self):
-        return "_doc"

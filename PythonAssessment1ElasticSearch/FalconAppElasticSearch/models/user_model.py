@@ -1,5 +1,5 @@
 import falcon
-
+import elasticsearch
 from .elasticsearch_model import ElasticsearchModel
 class User:
     def create_user(self, name, email, age):
@@ -16,7 +16,6 @@ class User:
         model = ElasticsearchModel()
         es = model.get_es_client()
         index = model.get_index()
-        doc_type = model.get_type()
         if es.exists(index=index, id=email):
             raise falcon.HTTPBadRequest("Email already exists")
         data = self.convert_to_dict(name, email, age)
@@ -29,8 +28,10 @@ class User:
 
     @classmethod
     def find_by_email(cls, email):
-        model = ElasticsearchModel()
-        es = model.get_es_client()
-        index = model.get_index()
-        doc_type = model.get_type()
-        return es.get(index=index, id=email)['_source']
+        try:
+            model = ElasticsearchModel()
+            es = model.get_es_client()
+            index = model.get_index()
+            return es.get(index=index, id=email)['_source']
+        except elasticsearch.NotFoundError:
+            return None
