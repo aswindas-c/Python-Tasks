@@ -17,7 +17,7 @@ class MainController:
         name = data.get('name')
         email = data.get('email').lower()
         age = data.get('age')
-        User().create_user(name,email,age)
+        User().create_user(name=name, email=email, age=age)
         # Write user details to a JSON file
         try:
             with open('users.json', 'r') as f:
