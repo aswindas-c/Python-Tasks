@@ -1,5 +1,6 @@
 import falcon
 import elasticsearch
+
 from .elasticsearch_model import ElasticsearchModel
 class User:
     def create_user(self, name, email, age):
@@ -16,11 +17,14 @@ class User:
         model = ElasticsearchModel()
         es = model.get_es_client()
         index = model.get_index()
-        if es.exists(index=index, id=email):
+        email_query = {'match': {'email.keyword': email}}
+        response = es.search(index=index, query=email_query)
+        email_exists = response['hits']['total']['value']
+        if email_exists > 0:
             raise falcon.HTTPBadRequest("Email already exists")
         data = self.convert_to_dict(name, email, age)
         if data is not None:
-            es.index(index=index, id=email, body=data)
+            es.index(index=index, body=data)
 
     @staticmethod
     def convert_to_dict(name, email, age):
@@ -28,10 +32,12 @@ class User:
 
     @classmethod
     def find_by_email(cls, email):
-        try:
-            model = ElasticsearchModel()
-            es = model.get_es_client()
-            index = model.get_index()
-            return es.get(index=index, id=email)['_source']
-        except elasticsearch.NotFoundError:
+        model = ElasticsearchModel()
+        es = model.get_es_client()
+        index = model.get_index()
+        search_query = {'match': {'email.keyword': email}}
+        search_data = es.search(index=index, query=search_query)['hits']['hits']
+        for data in search_data:
+            return data['_source']
+        else:
             return None
