@@ -37,16 +37,15 @@ def test_post_route_invalid_email(client):
 #Email already exists
 def test_create_user_email_already_exists(client,mocker):
     mock_es = mocker.patch('FalconAppElasticSearch.models.elasticsearch_model.Elasticsearch')
-    # Mock the search method to return a response indicating the email already exists
     mock_response = {
         'hits': {
             'total': {
-                'value': 1,  # Simulating that one document matches the search
+                'value': 1,
                 'relation': 'eq'
             },
             'hits': [
                 {
-                    '_id': '1',  # Example document ID
+                    '_id': 'john@example.com',
                     '_source': {
                         'email': 'john@example.com'
                     }
@@ -55,11 +54,8 @@ def test_create_user_email_already_exists(client,mocker):
         }
     }
     mock_es.return_value.search.return_value = mock_response
-    # Simulate a POST request to create a user
-    response = client.simulate_post('/users',
-                                    json={'name': 'John Doe', 'email': 'john@example.com', 'age': 30})
-
-    # Assertions to check if the response is as expected
+    data = {'name': 'John Doe', 'email': 'john@example.com', 'age': 30}
+    response = client.simulate_post('/users',json=data)
     assert response.status == falcon.HTTP_400
     assert response.json == {'title': 'Email already exists'}
 
